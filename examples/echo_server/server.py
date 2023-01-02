@@ -7,11 +7,11 @@ async def handle_echo(reader, writer):
     """Generic python tcp echo server"""
     data = await reader.read(100)
     message = data.decode()
-    print("Received %r" % message)
+    print("Received {}r".format(message))
 
     writer.write(data)
     await writer.drain()
-    print("Sent: %r" % message)
+    print("Sent: {}r".format(message))
 
     writer.close()
 
@@ -24,10 +24,10 @@ server = loop.run_until_complete(coro)
 # Determine the dynamically chosen address
 host = socket.gethostbyname(socket.gethostname())
 port = server.sockets[0].getsockname()[1]
-address = '%s:%d' % (host, port)
+address = '{}s:{}d'.format(host, port)
 
 # Form a unique key to store the address using the current container id
-key = 'address.%s' % skein.properties.container_id
+key = 'address.{}s'.format(skein.properties.container_id)
 
 # Connect to the application master
 app = skein.ApplicationClient.from_current()
@@ -47,3 +47,4 @@ loop.run_forever()
 server.close()
 loop.run_until_complete(server.wait_closed())
 loop.close()
+
